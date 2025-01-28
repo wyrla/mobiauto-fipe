@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Text } from "../../components";
 import { Chip } from "../../components/Chip";
 import { useQuoteContext } from "../../context/quote";
-import { QuoteResultPageWrapper } from "./QuoteResultPage.styles";
+import { CustomChip, QuoteResultPageWrapper } from "./QuoteResultPage.styles";
 import { FipeCar, getCarQuote } from "../../api/fipe";
 import { useNavigate } from "react-router";
 
@@ -36,9 +36,11 @@ export const QuoteResult: React.FC = () => {
 
   return (
     <QuoteResultPageWrapper>
-      <Text variant="h1">Tabela Fipe: Preço {car?.Marca} {car?.Modelo} {car?.AnoModelo}</Text>
-      <Chip label={car?.Valor}/>
-      <Text variant="h2">Este é o preço de compra do veículo</Text>
+      <main>
+        <Text variant="h1" $bold>Tabela Fipe: Preço {car?.Marca} {car?.Modelo} {car?.AnoModelo}</Text>
+        <CustomChip label={car?.Valor}/>
+        <Text variant="caption" >Este é o preço de compra do veículo</Text>
+      </main>
     </QuoteResultPageWrapper>
   );
 };
