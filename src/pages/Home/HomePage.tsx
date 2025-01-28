@@ -1,50 +1,13 @@
-import { useEffect, useState } from "react";
 import { Autocomplete, Button, FormControl, Text } from "../../components";
 import { CustomCard, HomePageWrapper } from "./HomePage.styles";
-import { FipeItem, getBrands, getModels, getModelYear } from "../../api/fipe";
-import { useDispatch, useQuoteContext } from "../../context/quote";
+import { useDispatch } from "../../context/quote";
 import { useNavigate } from "react-router";
+import { useForm } from "../../hooks";
 
 export const HomePage: React.FC = () => {
-  const { lists, form: formData } = useQuoteContext();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [models, setModels] = useState<FipeItem[]>([]);
-  const [yearList, setYearList] = useState<FipeItem[]>([]);
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
-  useEffect(() => {
-    console.log(lists);
-  }, [lists]);
-  useEffect(() => {
-    if (formData.brand) fetchModels(formData.brand!.codigo);
-  }, [formData.brand]);
-  useEffect(() => {
-    if (formData.model)
-      fetchModelYear(formData.brand!.codigo, formData.model!.codigo);
-  }, [formData.model]);
-
-  const fetchModels = async (brandId: string) => {
-    const models = await getModels(brandId);
-    setModels(models);
-  };
-
-  const fetchItems = async () => {
-    const brands = await getBrands();
-    dispatch({
-      type: "add_brands",
-      payload: brands,
-    });
-  };
-  const fetchModelYear = async (brandId: string, model: string) => {
-    const brands = await getModelYear({
-      brandCode: brandId,
-      modelCode: model,
-    });
-    setYearList(brands);
-  };
+  const formData = useForm();
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -71,7 +34,7 @@ export const HomePage: React.FC = () => {
                     field: "brand",
                   })
                 }
-                options={lists.brands ?? []}
+                options={[]}
               />
             </FormControl>
             <FormControl fullWidth>
@@ -86,7 +49,7 @@ export const HomePage: React.FC = () => {
                     field: "model",
                   })
                 }
-                options={models ?? []}
+                options={[]}
               />
             </FormControl>
             {formData.model && (
@@ -102,7 +65,7 @@ export const HomePage: React.FC = () => {
                       field: "year",
                     })
                   }
-                  options={yearList ?? []}
+                  options={[]}
                 />
               </FormControl>
             )}
