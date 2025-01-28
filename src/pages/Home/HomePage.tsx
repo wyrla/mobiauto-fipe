@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Autocomplete, Button, FormControl, Text } from "../../components";
 import { CustomCard, HomePageWrapper } from "./HomePage.styles";
 import { FipeItem, getBrands, getModels, getModelYear } from "../../api/fipe";
+import { useDispatch, useQuoteContext } from "../../context/quote";
 
 export const HomePage: React.FC = () => {
   const [formData, setFormData] = useState<
@@ -11,12 +12,18 @@ export const HomePage: React.FC = () => {
     model: null,
     year: null,
   });
-  const [brands, setBrands] = useState<FipeItem[]>([]);
+  const { lists } = useQuoteContext();
+  const dispatch = useDispatch();
   const [models, setModels] = useState<FipeItem[]>([]);
   const [yearList, setYearList] = useState<FipeItem[]>([]);
   useEffect(() => {
     fetchItems();
   }, []);
+
+  
+  useEffect(() => {
+    console.log(lists)
+  }, [lists]);
   useEffect(() => {
     if (formData.brand) fetchModels(formData.brand!.codigo);
   }, [formData.brand]);
@@ -32,7 +39,10 @@ export const HomePage: React.FC = () => {
 
   const fetchItems = async () => {
     const brands = await getBrands();
-    setBrands(brands);
+    dispatch({
+      type: "add_brands",
+      payload: brands
+    })
   };
   const fetchModelYear = async (brandId: string, model: string) => {
     const brands = await getModelYear({
@@ -60,7 +70,7 @@ export const HomePage: React.FC = () => {
               onChange={(_, value) =>
                 setFormData({  brand: value, model: null, year: null })
               }
-              options={brands}
+              options={lists.brands}
             />
           </FormControl>
           <FormControl fullWidth>

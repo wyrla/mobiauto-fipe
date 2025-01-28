@@ -4,6 +4,7 @@ import { theme } from "./lib/mui/theme"
 import { HomePage } from "./pages/Home"
 import { CssBaseline } from "@mui/material"
 import { QuoteResult } from "./pages/QuoteResult"
+import { QuoteProvider } from "./context/quote"
 
 const router = createBrowserRouter([
   { path: '/', Component: HomePage },
@@ -15,7 +16,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <RouterProvider router={router} />
+      <QuoteProvider>
+        <RouterProvider router={router} />
+      </QuoteProvider>
     </ThemeProvider>
   )
 }
