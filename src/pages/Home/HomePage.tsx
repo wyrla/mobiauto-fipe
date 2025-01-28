@@ -53,61 +53,65 @@ export const HomePage: React.FC = () => {
 
   return (
     <HomePageWrapper>
-      <Text variant="h1">Tabela Fipe</Text>
-      <Text variant="h2">Consulte o valor de um veículo de forma gratuita</Text>
-      <CustomCard>
-        <form onSubmit={handleFormSubmit}>
-          <FormControl fullWidth>
-            <Autocomplete
-              label="Marca"
-              value={formData.brand}
-              onChange={(_, value) =>
-                dispatch({
-                  type: "set_form_field",
-                  payload: value!,
-                  field: "brand",
-                })
-              }
-              options={lists.brands}
-            />
-          </FormControl>
-          <FormControl fullWidth>
-            <Autocomplete
-              label="Modelo"
-              disabled={!formData.brand}
-              value={formData.model}
-              onChange={(_, value) =>
-                dispatch({
-                  type: "set_form_field",
-                  payload: value!,
-                  field: "model",
-                })
-              }
-              options={models}
-            />
-          </FormControl>
-          {formData.model && (
+      <main>
+        <Text variant="h1">Tabela Fipe</Text>
+        <Text variant="h2">
+          Consulte o valor de um veículo de forma gratuita
+        </Text>
+        <CustomCard>
+          <form onSubmit={handleFormSubmit}>
             <FormControl fullWidth>
               <Autocomplete
-                label="Ano"
-                disabled={!formData.model}
-                value={formData.year}
+                label="Marca"
+                value={formData.brand}
                 onChange={(_, value) =>
                   dispatch({
                     type: "set_form_field",
                     payload: value!,
-                    field: "year",
+                    field: "brand",
                   })
                 }
-                options={yearList}
+                options={lists.brands}
               />
             </FormControl>
-          )}
-          <Button type="submit" variant="contained">
-            Consultar preço
-          </Button>
-        </form>
-      </CustomCard>
+            <FormControl fullWidth>
+              <Autocomplete
+                label="Modelo"
+                disabled={!formData.brand}
+                value={formData.model}
+                onChange={(_, value) =>
+                  dispatch({
+                    type: "set_form_field",
+                    payload: value!,
+                    field: "model",
+                  })
+                }
+                options={models}
+              />
+            </FormControl>
+            {formData.model && (
+              <FormControl fullWidth>
+                <Autocomplete
+                  label="Ano"
+                  disabled={!formData.model}
+                  value={formData.year}
+                  onChange={(_, value) =>
+                    dispatch({
+                      type: "set_form_field",
+                      payload: value!,
+                      field: "year",
+                    })
+                  }
+                  options={yearList}
+                />
+              </FormControl>
+            )}
+            <Button type="submit" variant="contained">
+              Consultar preço
+            </Button>
+          </form>
+        </CustomCard>
+      </main>
     </HomePageWrapper>
   );
 };
