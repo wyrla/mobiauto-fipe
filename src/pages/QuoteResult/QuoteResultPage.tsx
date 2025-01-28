@@ -2,24 +2,29 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { CustomChip, QuoteResultPageWrapper } from "./QuoteResultPage.styles";
 import { useQuote } from "../../hooks";
-import { useGetPriceQuoteQuery } from "../../api/fipe";
+import { api } from "../../api/fipe";
 import { Text } from "../../components";
+import { QuoteState } from "../../store/slices/quoteSlice";
 
 export const QuoteResult: React.FC = () => {
   const { formData } = useQuote();
-  const { data: car } = useGetPriceQuoteQuery({
-    brandCode: formData.brand!.codigo,
-    modelCode: formData.model!.codigo,
-    year: formData.year!.codigo,
-  });
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+  const [getPriceQuoteQuery, result] = api.endpoints.getPriceQuote.useLazyQuery();
+  const car = result.data;
+  
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!Object.values(formData).every((item) => item)) navigate("/");
+    fecthQuote(formData)
   }, [formData]);
+  
+  const fecthQuote = (formData: QuoteState['form']) => {
+    getPriceQuoteQuery({
+      brandCode: formData.brand!.codigo,
+      modelCode: formData.model!.codigo,
+      year: formData.year!.codigo,
+    })
+  }
 
   return (
     <QuoteResultPageWrapper>

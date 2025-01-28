@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FipeItem } from "../../api/fipe";
 import { RootState } from "../store";
 
-interface QuoteState {
+export interface QuoteState {
   form: {
     brand: FipeItem | null;
     model: FipeItem | null;
@@ -52,7 +52,8 @@ export const quoteSlice = createSlice({
     setBrandsList: (state, action: PayloadAction<FipeItem[]>) => {
       state.lists.brands = action.payload;
     },
-    setModelsList: (state, action: PayloadAction<FipeItem[]>) => {
+    setModelsList: (state, action) => {
+
       state.lists.models = action.payload;
     },
     setYearsByModelList: (state, action: PayloadAction<FipeItem[]>) => {
