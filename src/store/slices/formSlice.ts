@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FipeItem } from "../../api/fipe";
+import { RootState } from "../store";
 
 interface FormState {
   brand: FipeItem | null;
@@ -32,3 +33,7 @@ export const formSlice = createSlice({
 export const { setBrand, setModel, setModelYear } = formSlice.actions
 
 export default formSlice.reducer
+
+export const selectBrand = (state: RootState) => state.form.brand;
+export const selectModel = (state: RootState) => state.form.model;
+export const selectYear = (state: RootState) => state.form.year;
