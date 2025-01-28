@@ -24,9 +24,11 @@ export const QuoteResult: React.FC = () => {
   return (
     <QuoteResultPageWrapper>
       <main>
-        <Text variant="h1" $bold>Tabela Fipe: Preço {car?.Marca} {car?.Modelo} {car?.AnoModelo}</Text>
+        <Text variant="h1" $bold>
+          Tabela Fipe: Preço {car?.Marca} {car?.Modelo} {car?.AnoModelo}
+        </Text>
         <CustomChip label={car?.Valor}/>
-        <Text variant="caption" >Este é o preço de compra do veículo</Text>
+        <Text variant="caption">Este é o preço de compra do veículo</Text>
       </main>
     </QuoteResultPageWrapper>
   );
