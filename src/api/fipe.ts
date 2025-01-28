@@ -1,6 +1,10 @@
-const FIPE_URI = "https://parallelum.com.br/fipe/api/v1";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export type FipeItem = { codigo: string, nome: string };
+export type FipeItem = { 
+  codigo: string; 
+  nome: string
+};
+
 export type FipeCar = {
   TipoVeiculo: number;
   Valor: string;
@@ -13,28 +17,40 @@ export type FipeCar = {
   SiglaCombustivel: string;
 };
 
-export const getBrands = async (): Promise<FipeItem[]> => {
-  const data = await fetch(`${FIPE_URI}/carros/marcas`);
-  const result = await data.json();
-  if (data.ok) return result;
-  return [];
-}
+type FipeQuery = Record<"brandCode" | "modelCode" | "year", string>;
 
-export const getModels = async (brandCode: string): Promise<FipeItem[]> => {
-  const data = await fetch(`${FIPE_URI}/carros/marcas/${brandCode}/modelos`);
-  const result = await data.json();
-  return result.modelos;
-}
+export const api = createApi({
+  reducerPath: "api",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://parallelum.com.br/fipe/api/v1",
+  }),
+  endpoints: (builder) => ({
+    getBrands: builder.query({
+      query: () => "carros/marcas",
+    }),
+    getModels: builder.query<FipeItem[], Pick<FipeQuery, "brandCode">>({
+      query: (brandCode) => `carros/marcas/${brandCode}/modelos`,
+    }),
+    getYearsByModels: builder.query<
+      FipeItem[],
+      Pick<FipeQuery, "brandCode" | "modelCode">
+    >({
+      query: ({ brandCode, modelCode }) =>
+        `carros/marcas/${brandCode}/modelos/${modelCode}/anos`,
+    }),
+    getPriceQuote: builder.query<
+      FipeCar,
+      Record<"brandCode" | "modelCode" | "year", string>
+    >({
+      query: ({ brandCode, modelCode, year }) =>
+        `carros/marcas/${brandCode}/modelos/${modelCode}/anos/${year}`,
+    }),
+  }),
+});
 
-export const getModelYear = async ({brandCode, modelCode}: {brandCode: string, modelCode: string, }): Promise<FipeItem[]> => {
-  const data = await fetch(`${FIPE_URI}/carros/marcas/${brandCode}/modelos/${modelCode}/anos`);
-  const result = await data.json();
-  return result;
-}
-
-export const getCarQuote = async ({ brandCode, modelCode, year}: {brandCode: string, modelCode: string, year: string }): Promise<FipeCar> => {
-  const data = await fetch(`${FIPE_URI}/carros/marcas/${brandCode}/modelos/${modelCode}/anos/${year}`);
-  const result = await data.json();
-  return result;
-}
-
+export const {
+  useGetBrandsQuery,
+  useGetModelsQuery,
+  useGetYearsByModelsQuery,
+  useGetPriceQuoteQuery,
+} = api;
