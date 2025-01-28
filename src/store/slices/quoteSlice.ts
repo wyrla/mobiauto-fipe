@@ -34,10 +34,13 @@ export const quoteSlice = createSlice({
   name: "quote",
   initialState,
   reducers: {
-    setFormData: (state, action: PayloadAction<{
-  field: FormKeys;
-  value: FipeItem;
-}>) => {
+    setFormData: (
+      state,
+      action: PayloadAction<{
+        field: FormKeys;
+        value: FipeItem;
+      }>
+    ) => {
       return {
         ...state,
         form: {
