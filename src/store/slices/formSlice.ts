@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FipeItem } from "../../api/fipe";
 
 interface FormState {
@@ -17,13 +17,13 @@ export const formSlice = createSlice({
   name: "form",
   initialState,
   reducers: {
-    setBrand: (state, action) => {
+    setBrand: (state, action: PayloadAction<FipeItem>) => {
       return { brand: action.payload, model: null, year: null };
     },
-    setModel: (state, action) => {
+    setModel: (state, action: PayloadAction<FipeItem>) => {
       return { ...state, model: action.payload };
     },
-    setModelYear: (state, action) => {
+    setModelYear: (state, action: PayloadAction<FipeItem>) => {
       return { ...state, year: action.payload };
     },
   },
