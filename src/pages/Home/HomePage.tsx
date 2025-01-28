@@ -1,15 +1,13 @@
 import { Autocomplete, Button, FormControl, Text } from "../../components";
 import { CustomCard, HomePageWrapper } from "./HomePage.styles";
-import { useDispatch } from "../../context/quote";
 import { useNavigate } from "react-router";
 import { useForm } from "../../hooks";
 import { useLists } from "../../hooks/useLists";
 import { useEffect } from "react";
 
 export const HomePage: React.FC = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const formData = useForm();
+  const { setValue, ...formData} = useForm();
   const { brands, fetchBrands } = useLists();
 
   useEffect(() => {
@@ -36,11 +34,7 @@ export const HomePage: React.FC = () => {
                 label="Marca"
                 value={formData.brand}
                 onChange={(_, value) =>
-                  dispatch({
-                    type: "set_form_field",
-                    payload: value!,
-                    field: "brand",
-                  })
+                  setValue("brand", value!)
                 }
                 options={brands}
               />
@@ -51,11 +45,7 @@ export const HomePage: React.FC = () => {
                 disabled={!formData.brand}
                 value={formData.model}
                 onChange={(_, value) =>
-                  dispatch({
-                    type: "set_form_field",
-                    payload: value!,
-                    field: "model",
-                  })
+                  setValue("model", value!)
                 }
                 options={[]}
               />
@@ -67,11 +57,7 @@ export const HomePage: React.FC = () => {
                   disabled={!formData.model}
                   value={formData.year}
                   onChange={(_, value) =>
-                    dispatch({
-                      type: "set_form_field",
-                      payload: value!,
-                      field: "year",
-                    })
+                    setValue("year", value!)
                   }
                   options={[]}
                 />
