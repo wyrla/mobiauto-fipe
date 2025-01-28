@@ -27,47 +27,49 @@ export const HomePage: React.FC = () => {
         <Text variant="h2">
           Consulte o valor de um veículo de forma gratuita
         </Text>
-        <CustomCard>
-          <form onSubmit={handleFormSubmit}>
-            <FormControl fullWidth>
-              <Autocomplete
-                label="Marca"
-                value={formData.brand}
-                onChange={(_, value) =>
-                  setValue("brand", value!)
-                }
-                options={brands}
-              />
-            </FormControl>
-            <FormControl fullWidth>
-              <Autocomplete
-                label="Modelo"
-                disabled={!formData.brand}
-                value={formData.model}
-                onChange={(_, value) =>
-                  setValue("model", value!)
-                }
-                options={[]}
-              />
-            </FormControl>
-            {formData.model && (
-              <FormControl fullWidth>
-                <Autocomplete
-                  label="Ano"
-                  disabled={!formData.model}
-                  value={formData.year}
-                  onChange={(_, value) =>
-                    setValue("year", value!)
+          {brands?.length && (
+            <CustomCard>
+              <form onSubmit={handleFormSubmit}>
+                <FormControl fullWidth>
+                  <Autocomplete
+                    label="Marca"
+                    value={formData.brand}
+                    onChange={(_, value) => handleFormData("brand", value!)}
+                    options={brands ?? []}
+                  />
+                </FormControl>
+                <FormControl fullWidth>
+                  <Autocomplete
+                    label="Modelo"
+                    disabled={!formData.brand}
+                    value={formData.model}
+                    onChange={(_, value) => handleFormData("model", value!)}
+                    options={models ?? []}
+                  />
+                </FormControl>
+                {formData.model && (
+                  <FormControl fullWidth>
+                    <Autocomplete
+                      label="Ano"
+                      disabled={!formData.model}
+                      value={formData.year}
+                      onChange={(_, value) => handleFormData("year", value!)}
+                      options={years ?? []}
+                    />
+                  </FormControl>
+                )}
+                <Button
+                  type="submit"
+                  variant="contained"
+                  disabled={
+                    !(formData.brand && formData.model && formData.year)
                   }
-                  options={[]}
-                />
-              </FormControl>
-            )}
-            <Button type="submit" variant="contained" disabled={!(formData.brand && formData.model && formData.year)}> 
-              Consultar preço
-            </Button>
-          </form>
-        </CustomCard>
+                >
+                  Consultar preço
+                </Button>
+              </form>
+            </CustomCard>
+          )}
       </main>
     </HomePageWrapper>
   );
