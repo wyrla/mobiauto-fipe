@@ -1,5 +1,13 @@
-import { Typography, TypographyProps } from "@mui/material";
+import { Typography as MuiTypography, TypographyProps, styled } from "@mui/material";
 
-export const Text = ({children, ...props}: TypographyProps) => {
+type CustomTypographyProps = TypographyProps & {
+  $bold?: boolean;
+}
+
+const Typography = styled(MuiTypography)<CustomTypographyProps>`${({ theme, $bold }) => `
+  font-weight: ${$bold ? 700 : 400};
+`}`
+
+export const Text = ({children, ...props}: CustomTypographyProps) => {
   return <Typography {...props}>{children}</Typography>;
 }
