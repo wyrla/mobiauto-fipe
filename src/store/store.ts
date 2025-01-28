@@ -1,13 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import formReducer from './slices/formSlice'
-import listReducer from './slices/listSlice'
+import quoteReducer from './slices/quoteSlice'
 import { api } from '../api/fipe'
 
 export const store = configureStore({
   reducer: {
-    form: formReducer,
-    list: listReducer,
+    quote: quoteReducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>
