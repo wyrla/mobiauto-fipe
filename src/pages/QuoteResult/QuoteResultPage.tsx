@@ -1,37 +1,25 @@
-import { useEffect, useState } from "react";
-import { Text } from "../../components";
-import { useQuoteContext } from "../../context/quote";
-import { CustomChip, QuoteResultPageWrapper } from "./QuoteResultPage.styles";
-import { FipeCar, getCarQuote } from "../../api/fipe";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import { CustomChip, QuoteResultPageWrapper } from "./QuoteResultPage.styles";
+import { useQuote } from "../../hooks";
+import { useGetPriceQuoteQuery } from "../../api/fipe";
+import { Text } from "../../components";
 
 export const QuoteResult: React.FC = () => {
-  const { form : formData } = useQuoteContext();
+  const { formData } = useQuote();
+  const { data: car } = useGetPriceQuoteQuery({
+    brandCode: formData.brand!.codigo,
+    modelCode: formData.model!.codigo,
+    year: formData.year!.codigo,
+  });
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
   const navigate = useNavigate();
-  const [car, setCar] = useState<FipeCar | null>(null);
-  console.log(formData);
 
   useEffect(() => {
-    console.log(Object.values(formData));
-    console.log(Object.values(formData).every((item) => item));
-    if(Object.values(formData).every((item) => item)) {
-      fetchQuotePrice();
-      return;
-    }
-    navigate('/');
-
+    if (!Object.values(formData).every((item) => item)) navigate("/");
   }, [formData]);
-
-
-  const fetchQuotePrice = async () => {
-    
-    const cart = await getCarQuote({
-      brandCode: formData.brand!.codigo,
-      modelCode: formData.model!.codigo,
-      year: formData.year!.codigo,
-    });
-    setCar(cart);
-  };
 
   return (
     <QuoteResultPageWrapper>
