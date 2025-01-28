@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
 import { Autocomplete, FormControl, Text } from "../../components";
 import { CustomCard, HomePageWrapper } from "./HomePage.styles";
-import { getBrands } from "../../api/fipe";
+import { FipeItem, getBrands } from "../../api/fipe";
+
+
 
 export const HomePage: React.FC = () => {
-  const [brands, setBrands] = useState([]);
+  const [formData, setFormData] = useState<Record<'model' | 'brand' | 'year', FipeItem | null>>({
+    brand: null,
+    model: null,
+    year: null,
+  })
+  const [brands, setBrands] = useState<FipeItem[]>([]);
   useEffect(() => {
     fetchItems();
   }, []);
@@ -23,7 +30,9 @@ export const HomePage: React.FC = () => {
           <FormControl fullWidth>
             <Autocomplete 
             label="Marca"
-            options={brands.map((brand: { codigo: string, nome: string}) => ({id: brand.codigo, label: brand.nome}))} />
+            value={formData.brand}
+            onChange={(_, value) => setFormData({...formData, brand: value})}
+            options={brands} />
           </FormControl>
         </form>
       </CustomCard>
