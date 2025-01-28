@@ -3,19 +3,20 @@ import { Autocomplete, Button, FormControl, Text } from "../../components";
 import { CustomCard, HomePageWrapper } from "./HomePage.styles";
 import { FipeItem, getBrands, getModels, getModelYear } from "../../api/fipe";
 import { useDispatch, useQuoteContext } from "../../context/quote";
+import { useNavigate } from "react-router";
 
 export const HomePage: React.FC = () => {
-  const { lists, form : formData } = useQuoteContext();
+  const { lists, form: formData } = useQuoteContext();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [models, setModels] = useState<FipeItem[]>([]);
   const [yearList, setYearList] = useState<FipeItem[]>([]);
   useEffect(() => {
     fetchItems();
   }, []);
 
-  
   useEffect(() => {
-    console.log(lists)
+    console.log(lists);
   }, [lists]);
   useEffect(() => {
     if (formData.brand) fetchModels(formData.brand!.codigo);
@@ -34,8 +35,8 @@ export const HomePage: React.FC = () => {
     const brands = await getBrands();
     dispatch({
       type: "add_brands",
-      payload: brands
-    })
+      payload: brands,
+    });
   };
   const fetchModelYear = async (brandId: string, model: string) => {
     const brands = await getModelYear({
@@ -47,10 +48,8 @@ export const HomePage: React.FC = () => {
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(formData);
+    navigate("/quote-result");
   };
-
-  console.log("formData", formData)
 
   return (
     <HomePageWrapper>
@@ -63,7 +62,11 @@ export const HomePage: React.FC = () => {
               label="Marca"
               value={formData.brand}
               onChange={(_, value) =>
-                dispatch({ type: "set_form_field", payload: value!, field: 'brand'})
+                dispatch({
+                  type: "set_form_field",
+                  payload: value!,
+                  field: "brand",
+                })
               }
               options={lists.brands}
             />
@@ -74,7 +77,11 @@ export const HomePage: React.FC = () => {
               disabled={!formData.brand}
               value={formData.model}
               onChange={(_, value) =>
-                dispatch({ type: "set_form_field", payload: value!, field: 'model'})
+                dispatch({
+                  type: "set_form_field",
+                  payload: value!,
+                  field: "model",
+                })
               }
               options={models}
             />
@@ -86,13 +93,19 @@ export const HomePage: React.FC = () => {
                 disabled={!formData.model}
                 value={formData.year}
                 onChange={(_, value) =>
-                  dispatch({ type: "set_form_field", payload: value!, field: 'year'})
+                  dispatch({
+                    type: "set_form_field",
+                    payload: value!,
+                    field: "year",
+                  })
                 }
                 options={yearList}
               />
             </FormControl>
           )}
-          <Button type="submit" variant="contained" >Consultar preço</Button>
+          <Button type="submit" variant="contained">
+            Consultar preço
+          </Button>
         </form>
       </CustomCard>
     </HomePageWrapper>
