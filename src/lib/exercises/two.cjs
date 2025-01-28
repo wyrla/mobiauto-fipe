@@ -1,5 +1,9 @@
 function updateData(currentObject, newDataObject) { 
-  // your code here... 
+  for (const key in currentObject) {
+    currentObject[key] = newDataObject[key] || currentObject[key];
+  }
+
+  return currentObject;
 } 
 
 console.assert(String(updateData({ name: "Marcos", country: "Brasil", age: 22 }, { country: "Japão", age: 33 })) === String({ 
