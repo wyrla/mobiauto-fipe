@@ -14,6 +14,8 @@ const initialState: FormState = {
   year: null,
 };
 
+export type FormKeys = keyof typeof initialState; 
+
 export const formSlice = createSlice({
   name: "form",
   initialState,
