@@ -58,6 +58,10 @@ type Lists = { brands: FipeItem[]; models: FipeItem[]; year: FipeItem[] };
 type DispatchAction = {
   type: "add_brands" | "add_models" | "add_models_by_year";
   payload: FipeItem[];
+} |  {
+  type: "set_form_field",
+  field: keyof State['form']
+  payload: FipeItem
 };
 
 const listsReducer = (state: State, action: DispatchAction): State => {
@@ -88,6 +92,15 @@ const listsReducer = (state: State, action: DispatchAction): State => {
           year: action.payload,
         },
       };
+    }
+    case "set_form_field": {
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          [action.field]: {...action.payload}
+        }
+      }
     }
     default:
       return state;

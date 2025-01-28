@@ -5,14 +5,7 @@ import { FipeItem, getBrands, getModels, getModelYear } from "../../api/fipe";
 import { useDispatch, useQuoteContext } from "../../context/quote";
 
 export const HomePage: React.FC = () => {
-  const [formData, setFormData] = useState<
-    Record<"model" | "brand" | "year", FipeItem | null>
-  >({
-    brand: null,
-    model: null,
-    year: null,
-  });
-  const { lists } = useQuoteContext();
+  const { lists, form : formData } = useQuoteContext();
   const dispatch = useDispatch();
   const [models, setModels] = useState<FipeItem[]>([]);
   const [yearList, setYearList] = useState<FipeItem[]>([]);
@@ -57,6 +50,8 @@ export const HomePage: React.FC = () => {
     console.log(formData);
   };
 
+  console.log("formData", formData)
+
   return (
     <HomePageWrapper>
       <Text variant="h1">Tabela Fipe</Text>
@@ -68,7 +63,7 @@ export const HomePage: React.FC = () => {
               label="Marca"
               value={formData.brand}
               onChange={(_, value) =>
-                setFormData({  brand: value, model: null, year: null })
+                dispatch({ type: "set_form_field", payload: value!, field: 'brand'})
               }
               options={lists.brands}
             />
@@ -79,7 +74,7 @@ export const HomePage: React.FC = () => {
               disabled={!formData.brand}
               value={formData.model}
               onChange={(_, value) =>
-                setFormData({ ...formData, model: value })
+                dispatch({ type: "set_form_field", payload: value!, field: 'model'})
               }
               options={models}
             />
@@ -91,7 +86,7 @@ export const HomePage: React.FC = () => {
                 disabled={!formData.model}
                 value={formData.year}
                 onChange={(_, value) =>
-                  setFormData({ ...formData, year: value })
+                  dispatch({ type: "set_form_field", payload: value!, field: 'year'})
                 }
                 options={yearList}
               />
