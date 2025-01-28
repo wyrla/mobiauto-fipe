@@ -3,11 +3,19 @@ import { CustomCard, HomePageWrapper } from "./HomePage.styles";
 import { useDispatch } from "../../context/quote";
 import { useNavigate } from "react-router";
 import { useForm } from "../../hooks";
+import { useLists } from "../../hooks/useLists";
+import { useEffect } from "react";
 
 export const HomePage: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formData = useForm();
+  const { brands, fetchBrands } = useLists();
+
+  useEffect(() => {
+    fetchBrands();
+  }, [])
+
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -34,7 +42,7 @@ export const HomePage: React.FC = () => {
                     field: "brand",
                   })
                 }
-                options={[]}
+                options={brands}
               />
             </FormControl>
             <FormControl fullWidth>
