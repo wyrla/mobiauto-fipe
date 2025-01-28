@@ -106,7 +106,7 @@ export const HomePage: React.FC = () => {
                 />
               </FormControl>
             )}
-            <Button type="submit" variant="contained">
+            <Button type="submit" variant="contained" disabled={!(formData.brand && formData.model && formData.year)}>
               Consultar preço
             </Button>
           </form>
