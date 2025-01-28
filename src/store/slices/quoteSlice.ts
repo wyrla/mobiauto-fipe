@@ -28,7 +28,7 @@ const initialState: QuoteState = {
   },
 };
 
-type FormKeys = keyof (typeof initialState)["form"];
+export type FormKeys = keyof (typeof initialState)["form"];
 
 export const quoteSlice = createSlice({
   name: "quote",
@@ -65,10 +65,10 @@ export const {
   setYearsByModelList,
 } = quoteSlice.actions;
 
-export const selectFormData = (state: RootState) => state.form;
-export const selectBrandList = (state: RootState) => state.list.brands;
-export const selectModelsList = (state: RootState) => state.list.models;
+export const selectFormData = (state: RootState) => state.quote.form;
+export const selectBrandList = (state: RootState) => state.quote.lists.brands;
+export const selectModelsList = (state: RootState) => state.quote.lists.models;
 export const selectYearsByModelList = (state: RootState) =>
-  state.list.yearsByModel;
+  state.quote.lists.yearsByModel;
 
 export default quoteSlice.reducer;
