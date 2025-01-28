@@ -71,7 +71,7 @@ export const HomePage: React.FC = () => {
                     field: "brand",
                   })
                 }
-                options={lists.brands}
+                options={lists.brands ?? []}
               />
             </FormControl>
             <FormControl fullWidth>
@@ -86,7 +86,7 @@ export const HomePage: React.FC = () => {
                     field: "model",
                   })
                 }
-                options={models}
+                options={models ?? []}
               />
             </FormControl>
             {formData.model && (
@@ -102,11 +102,11 @@ export const HomePage: React.FC = () => {
                       field: "year",
                     })
                   }
-                  options={yearList}
+                  options={yearList ?? []}
                 />
               </FormControl>
             )}
-            <Button type="submit" variant="contained" disabled={!(formData.brand && formData.model && formData.year)}>
+            <Button type="submit" variant="contained" disabled={!(formData.brand && formData.model && formData.year)}> 
               Consultar preço
             </Button>
           </form>
