@@ -15,8 +15,8 @@ const initialState: State = {
 const QuoteContext = createContext<State>(initialState);
 
 const DispatchContext = createContext<
-  React.Dispatch<DispatchAction> | undefined
->(undefined);
+  React.Dispatch<DispatchAction>
+>({} as React.Dispatch<DispatchAction>);
 export const useDispatch = () => useContext(DispatchContext);
 
 export const useQuoteContext: () => State = () => {

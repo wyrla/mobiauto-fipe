@@ -17,6 +17,7 @@ export const getBrands = async (): Promise<FipeItem[]> => {
   const data = await fetch(`${FIPE_URI}/carros/marcas`);
   const result = await data.json();
   if (data.ok) return result;
+  return [];
 }
 
 export const getModels = async (brandCode: string): Promise<FipeItem[]> => {
