@@ -24,8 +24,9 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://parallelum.com.br/fipe/api/v1",
   }),
+  keepUnusedDataFor: 3600 * 5,
   endpoints: (builder) => ({
-    getBrands: builder.query({
+    getBrands: builder.query<FipeItem[], void>({
       query: () => "carros/marcas",
     }),
     getModels: builder.query<FipeItem[], Pick<FipeQuery, "brandCode">>({
