@@ -14,6 +14,9 @@ export const HomePage: React.FC = () => {
   const [trigger, lazyGetModel] = api.endpoints.getModels.useLazyQuery();
   const { data: lazyGetModelData, isLoading: lazyGetModelIsLoading } = lazyGetModel;
   const models = lazyGetModelData?.modelos ?? [];
+  const [getYearListByModel, lazyGetYearListByModel] = api.endpoints.getYearsByModels.useLazyQuery();
+  const { data: lazyGetYearListByModelData, isLoading: lazyGetYearListByModelIsLoading } = lazyGetYearListByModel;
+  const years = lazyGetYearListByModelData ?? [];
  
 
   const handleFormSubmit = (event: React.FormEvent) => {
@@ -47,22 +50,26 @@ export const HomePage: React.FC = () => {
                     label="Modelo"
                     disabled={!formData.brand}
                     value={formData.model}
-                    onChange={(_, value) => handleFormData("model", value!)}
+                    onChange={(_, value) => {handleFormData("model", value!); getYearListByModel({
+                      brandCode: formData.brand!.codigo,
+                      modelCode: value!.codigo
+                    })}}
                     options={models}
                     loading={lazyGetModelIsLoading}
                   />
                 </FormControl>
-                {/* {formData.model && (
+                {formData.model && (
                   <FormControl fullWidth>
                     <Autocomplete
                       label="Ano"
                       disabled={!formData.model}
                       value={formData.year}
+                      loading={lazyGetYearListByModelIsLoading}
                       onChange={(_, value) => handleFormData("year", value!)}
                       options={years ?? []}
                     />
                   </FormControl>
-                )} */}
+                )}
                 <Button
                   type="submit"
                   variant="contained"
