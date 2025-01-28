@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FipeItem } from "../../api/fipe";
+import { RootState } from "../store";
 interface ListState {
   brands: FipeItem[];
   models: FipeItem[];
@@ -31,3 +32,7 @@ export const listSlice = createSlice({
 export const { setBrandsList, setModelsList, setYearsByModelList } = listSlice.actions
 
 export default listSlice.reducer
+
+export const selectBrandList = (state: RootState) => state.list.brands;
+export const selectModelsList = (state: RootState) => state.list.models;
+export const selectYearsByModelList = (state: RootState) => state.list.yearsByModel;
