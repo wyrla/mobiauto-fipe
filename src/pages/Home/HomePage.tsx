@@ -1,19 +1,20 @@
 import { Autocomplete, Button, FormControl, Text } from "../../components";
 import { CustomCard, HomePageWrapper } from "./HomePage.styles";
 import { useNavigate } from "react-router";
-import { useForm } from "../../hooks";
-import { useLists } from "../../hooks/useLists";
-import { useEffect } from "react";
+import { useQuote } from "../../hooks";
+import {
+  api,
+  useGetBrandsQuery,
+} from "../../api/fipe";
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const { setValue, ...formData} = useForm();
-  const { brands, fetchBrands } = useLists();
-
-  useEffect(() => {
-    fetchBrands();
-  }, [])
-
+  const { formData, handleFormData } = useQuote();
+  const { data: brands } = useGetBrandsQuery();
+  const [trigger, lazyGetModel] = api.endpoints.getModels.useLazyQuery();
+  const { data: lazyGetModelData, isLoading: lazyGetModelIsLoading } = lazyGetModel;
+  const models = lazyGetModelData?.modelos ?? [];
+ 
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -34,7 +35,10 @@ export const HomePage: React.FC = () => {
                   <Autocomplete
                     label="Marca"
                     value={formData.brand}
-                    onChange={(_, value) => handleFormData("brand", value!)}
+                    onChange={(_, value) => {
+                      handleFormData("brand", value!);
+                      trigger({brandCode: value!.codigo})
+                    }}
                     options={brands ?? []}
                   />
                 </FormControl>
@@ -44,10 +48,11 @@ export const HomePage: React.FC = () => {
                     disabled={!formData.brand}
                     value={formData.model}
                     onChange={(_, value) => handleFormData("model", value!)}
-                    options={models ?? []}
+                    options={models}
+                    loading={lazyGetModelIsLoading}
                   />
                 </FormControl>
-                {formData.model && (
+                {/* {formData.model && (
                   <FormControl fullWidth>
                     <Autocomplete
                       label="Ano"
@@ -57,7 +62,7 @@ export const HomePage: React.FC = () => {
                       options={years ?? []}
                     />
                   </FormControl>
-                )}
+                )} */}
                 <Button
                   type="submit"
                   variant="contained"
