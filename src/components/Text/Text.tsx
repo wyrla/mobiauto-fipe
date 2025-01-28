@@ -4,7 +4,7 @@ type CustomTypographyProps = TypographyProps & {
   $bold?: boolean;
 }
 
-const Typography = styled(MuiTypography)<CustomTypographyProps>`${({ theme, $bold }) => `
+const Typography = styled(MuiTypography)<CustomTypographyProps>`${({ $bold }) => `
   font-weight: ${$bold ? 700 : 400};
 `}`
 

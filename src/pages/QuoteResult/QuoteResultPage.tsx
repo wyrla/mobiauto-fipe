@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Text } from "../../components";
-import { Chip } from "../../components/Chip";
 import { useQuoteContext } from "../../context/quote";
 import { CustomChip, QuoteResultPageWrapper } from "./QuoteResultPage.styles";
 import { FipeCar, getCarQuote } from "../../api/fipe";

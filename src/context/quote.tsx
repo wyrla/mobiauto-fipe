@@ -31,7 +31,7 @@ export const useQuoteContext: () => State = () => {
   return context;
 };
 
-export const QuoteProvider = ({ children }) => {
+export const QuoteProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(listsReducer, initialState);
 
   const value = useMemo(

@@ -23,7 +23,7 @@ export const HomePageWrapper = styled("div")`
 `;
 
 export const CustomCard = styled(Card)`
-  ${({ theme }) => `
+  ${() => `
       width: 100%;
       display: flex;
       justify-content: center;

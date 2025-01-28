@@ -2,7 +2,7 @@ import { styled } from "@mui/material";
 import { Chip } from "../../components/Chip";
 
 export const QuoteResultPageWrapper = styled("div")`
-  ${({ theme }) => `
+  ${() => `
     height: 100vh;
     background: #DCF5F2;
     display: flex;
