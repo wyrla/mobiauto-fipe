@@ -1,1 +1,1 @@
-export * from './QuoteResultPage';
+export { QuoteResult } from './QuoteResultPage';

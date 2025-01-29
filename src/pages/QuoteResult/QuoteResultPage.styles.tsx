@@ -1,5 +1,5 @@
 import { styled } from "@mui/material";
-import { Chip } from "../../components/Chip";
+import { Chip } from "../../components";
 
 export const QuoteResultPageWrapper = styled("div")`
   ${() => `

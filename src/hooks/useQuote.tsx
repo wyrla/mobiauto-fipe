@@ -1,7 +1,5 @@
-import { FipeItem } from "../api/fipe";
 import { useAppDispatch, useAppSelector } from "../store";
 import {
-  FormKeys,
   QuoteState,
   selectModelsList,
   selectYearsByModelList,

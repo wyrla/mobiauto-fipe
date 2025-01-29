@@ -26,7 +26,7 @@ export const HomePage: React.FC = () => {
 
   const handleBrandSelected = async (item: FipeItem) => {
     const codigo = item && item.codigo;
-    setFormData((prev) => ({brand: item, model: null, year: null}));
+    setFormData(() => ({brand: item, model: null, year: null}));
     if(!codigo) return;
     const list = await getModels({
         brandCode: codigo,
