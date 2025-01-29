@@ -6,3 +6,4 @@ export * from "./MenuItem";
 export * from "./Autocomplete";
 export * from "./Text";
 export * from "./Chip";
+export * from "./Grid";
