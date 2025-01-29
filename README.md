@@ -4,6 +4,7 @@ Projeto: mobiauto-fipe<br>
 Funcionalidade: Cotação de valor de carros
 
 ## Estrutura
+
 ```
 📁 src
   ├─ 📁 api
@@ -17,15 +18,16 @@ Funcionalidade: Cotação de valor de carros
   |     ├─ exercises
   |     |  └─ Arquivos com as resoluções do exercícios propostos
   |     └─ mui
-  |        └─ Configuração do tema com MUI 
+  |        └─ Configuração do tema com MUI
   ├─ 📁 pages
   |     └─ Componentes de páginas
   ├─ 📁 store
   |     ├─ slices
-        |  └─ Definição das _slices_ (estados) a serem utilizados na store  
+        |  └─ Definição das _slices_ (estados) a serem utilizados na store
         └─ store
            └─ Definição da store global
 ```
+
 - Docs Relevantes
 
   - <https://react.dev/reference/react>
@@ -33,8 +35,6 @@ Funcionalidade: Cotação de valor de carros
   - <https://redux-toolkit.js.org/rtk-query/overview>
   - <https://reactrouter.com/home>
   - <https://mui.com/material-ui/getting-started/>
-
-
 
 ## Desenvolvimento
 
@@ -47,6 +47,7 @@ Funcionalidade: Cotação de valor de carros
   ```bash
   npm i
   ```
+
 - Executar runtime de desenvolvimento:
 
   ```bash
@@ -58,7 +59,7 @@ Funcionalidade: Cotação de valor de carros
   ```bash
   npm run build
   ```
-    
+
 - Executar exercícios:
 
   ```bash

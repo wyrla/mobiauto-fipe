@@ -1,1 +1,1 @@
-export * from './quoteSlice';
+export * from "./quoteSlice";

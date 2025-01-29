@@ -14,7 +14,11 @@ import {
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const { models, years, handleFormData } = useQuote();
-  const [formData, setFormData] = useState<QuoteState['form']>({ brand: null, model: null, year: null });
+  const [formData, setFormData] = useState<QuoteState["form"]>({
+    brand: null,
+    model: null,
+    year: null,
+  });
   const { data: brands } = useGetBrandsQuery();
   const [getModels, { isLoading: lazyGetModelIsLoading }] =
     api.endpoints.getModels.useLazyQuery();
@@ -30,13 +34,13 @@ export const HomePage: React.FC = () => {
 
   const handleBrandSelected = async (item: FipeItem) => {
     const codigo = item && item.codigo;
-    setFormData(() => ({brand: item, model: null, year: null}));
-    if(!codigo) return;
+    setFormData(() => ({ brand: item, model: null, year: null }));
+    if (!codigo) return;
     const list = await getModels({
-        brandCode: codigo,
-      });
+      brandCode: codigo,
+    });
 
-    dispatch(setModelsList(list.data?.modelos ?? [] ));
+    dispatch(setModelsList(list.data?.modelos ?? []));
   };
 
   const handleModelSelected = async (value: FipeItem) => {
@@ -74,7 +78,9 @@ export const HomePage: React.FC = () => {
                     label="Modelo"
                     disabled={!formData.brand}
                     value={formData.model}
-                    onChange={(_, value) => {handleModelSelected(value!)}}
+                    onChange={(_, value) => {
+                      handleModelSelected(value!);
+                    }}
                     options={models}
                     loading={lazyGetModelIsLoading}
                   />

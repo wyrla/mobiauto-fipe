@@ -16,8 +16,8 @@ export const QuoteResultPageWrapper = styled("div")`
       gap: 1rem;
     }
   `}
-`
+`;
 export const CustomChip = styled(Chip)`
   font-weight: 700;
   min-height: 2.1rem;
-`
+`;

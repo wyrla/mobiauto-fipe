@@ -12,15 +12,15 @@ export const useQuote = () => {
   const models = useAppSelector(selectModelsList);
   const years = useAppSelector(selectYearsByModelList);
 
-  const handleFormData = (data: QuoteState['form']) => {
+  const handleFormData = (data: QuoteState["form"]) => {
     dispatch(setFormData(data));
-  }
+  };
 
   return {
     formData,
     models,
     years,
 
-    handleFormData
+    handleFormData,
   };
 };

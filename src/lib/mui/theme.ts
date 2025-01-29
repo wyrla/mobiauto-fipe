@@ -46,5 +46,5 @@ export const theme = createTheme(
       },
     },
   },
-  ptBR
+  ptBR,
 );

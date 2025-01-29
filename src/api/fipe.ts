@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export type FipeItem = { 
-  codigo: string; 
-  nome: string
+export type FipeItem = {
+  codigo: string;
+  nome: string;
 };
 
 export type FipeCar = {
@@ -29,8 +29,11 @@ export const api = createApi({
     getBrands: builder.query<FipeItem[], void>({
       query: () => "carros/marcas",
     }),
-    getModels: builder.query<Record<'modelos' | 'anos', FipeItem[]>, Pick<FipeQuery, "brandCode">>({
-      query: ({brandCode}) => `carros/marcas/${brandCode}/modelos`,
+    getModels: builder.query<
+      Record<"modelos" | "anos", FipeItem[]>,
+      Pick<FipeQuery, "brandCode">
+    >({
+      query: ({ brandCode }) => `carros/marcas/${brandCode}/modelos`,
     }),
     getYearsByModels: builder.query<
       FipeItem[],

@@ -8,23 +8,24 @@ import { QuoteState } from "../../store/slices/quoteSlice";
 
 export const QuoteResult: React.FC = () => {
   const { formData } = useQuote();
-  const [getPriceQuoteQuery, result] = api.endpoints.getPriceQuote.useLazyQuery();
+  const [getPriceQuoteQuery, result] =
+    api.endpoints.getPriceQuote.useLazyQuery();
   const car = result.data;
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!Object.values(formData).every((item) => item?.codigo)) navigate("/");
-    fecthQuote(formData)
+    fecthQuote(formData);
   }, [formData]);
-  
-  const fecthQuote = (formData: QuoteState['form']) => {
+
+  const fecthQuote = (formData: QuoteState["form"]) => {
     getPriceQuoteQuery({
       brandCode: formData.brand!.codigo,
       modelCode: formData.model!.codigo,
       year: formData.year!.codigo,
-    })
-  }
+    });
+  };
 
   return (
     <QuoteResultPageWrapper>
@@ -32,7 +33,7 @@ export const QuoteResult: React.FC = () => {
         <Text variant="h1" $bold={true}>
           Tabela Fipe: Preço {car?.Marca} {car?.Modelo} {car?.AnoModelo}
         </Text>
-        <CustomChip label={car?.Valor}/>
+        <CustomChip label={car?.Valor} />
         <Text variant="caption">Este é o preço de compra do veículo</Text>
       </main>
     </QuoteResultPageWrapper>

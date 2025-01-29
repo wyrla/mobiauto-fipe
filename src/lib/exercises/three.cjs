@@ -11,7 +11,7 @@ const resolveSpecie = (specie) =>
 
 async function getRickAndMortyCharacters() {
   const res = await fetch(
-    "https://rickandmortyapi.com/api/character/1,2,3,4,5"
+    "https://rickandmortyapi.com/api/character/1,2,3,4,5",
   );
   const data = await res.json();
   const formattedData = data.map((person) => ({
