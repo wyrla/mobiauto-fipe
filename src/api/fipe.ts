@@ -29,8 +29,8 @@ export const api = createApi({
     getBrands: builder.query<FipeItem[], void>({
       query: () => "carros/marcas",
     }),
-    getModels: builder.query<FipeItem[], Pick<FipeQuery, "brandCode">>({
-      query: (brandCode) => `carros/marcas/${brandCode}/modelos`,
+    getModels: builder.query<Record<'modelos' | 'anos', FipeItem[]>, Pick<FipeQuery, "brandCode">>({
+      query: ({brandCode}) => `carros/marcas/${brandCode}/modelos`,
     }),
     getYearsByModels: builder.query<
       FipeItem[],
