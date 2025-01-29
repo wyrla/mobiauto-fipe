@@ -2,26 +2,47 @@ import { Autocomplete, Button, FormControl, Text } from "../../components";
 import { CustomCard, HomePageWrapper } from "./HomePage.styles";
 import { useNavigate } from "react-router";
 import { useQuote } from "../../hooks";
-import {
-  api,
-  useGetBrandsQuery,
-} from "../../api/fipe";
+import { api, FipeItem, useGetBrandsQuery } from "../../api/fipe";
+import { useAppDispatch } from "../../store";
+import { useState } from "react";
+import { QuoteState, setModelsList, setYearsByModelList } from "../../store/slices";
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const { formData, handleFormData } = useQuote();
+  const { models, years, handleFormData } = useQuote();
+  const [formData, setFormData] = useState<QuoteState['form']>({ brand: null, model: null, year: null });
   const { data: brands } = useGetBrandsQuery();
-  const [trigger, lazyGetModel] = api.endpoints.getModels.useLazyQuery();
-  const { data: lazyGetModelData, isLoading: lazyGetModelIsLoading } = lazyGetModel;
-  const models = lazyGetModelData?.modelos ?? [];
-  const [getYearListByModel, lazyGetYearListByModel] = api.endpoints.getYearsByModels.useLazyQuery();
-  const { data: lazyGetYearListByModelData, isLoading: lazyGetYearListByModelIsLoading } = lazyGetYearListByModel;
-  const years = lazyGetYearListByModelData ?? [];
- 
+  const [getModels, { isLoading: lazyGetModelIsLoading }] =
+    api.endpoints.getModels.useLazyQuery();
+  const [getYearListByModel, { isLoading: lazyGetYearListByModelIsLoading }] =
+    api.endpoints.getYearsByModels.useLazyQuery();
+  const dispatch = useAppDispatch();
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    console.log(formData);
+    handleFormData(formData);
     navigate("/quote-result");
+  };
+
+  const handleBrandSelected = async (item: FipeItem) => {
+    const codigo = item && item.codigo;
+    setFormData((prev) => ({brand: item, model: null, year: null}));
+    if(!codigo) return;
+    const list = await getModels({
+        brandCode: codigo,
+      });
+
+    dispatch(setModelsList(list.data?.modelos ?? [] ));
+  };
+
+  const handleModelSelected = async (v) => {
+    setFormData((prev) => ({ ...prev, model: v }));
+    const f = await getYearListByModel({
+      brandCode: formData.brand!.codigo,
+      modelCode: formData.model!.codigo,
+    });
+    dispatch(setYearsByModelList(f.data ?? []));
   };
 
   return (
@@ -31,57 +52,53 @@ export const HomePage: React.FC = () => {
         <Text variant="h2">
           Consulte o valor de um veículo de forma gratuita
         </Text>
-          {brands?.length && (
-            <CustomCard>
-              <form onSubmit={handleFormSubmit}>
+        {brands?.length && (
+          <CustomCard>
+            <form onSubmit={handleFormSubmit}>
+              <FormControl fullWidth>
+                <Autocomplete
+                  label="Marca"
+                  value={formData.brand}
+                  onChange={(_, value) => {
+                    handleBrandSelected(value!);
+                  }}
+                  options={brands ?? []}
+                />
+              </FormControl>
+              <FormControl fullWidth>
+                <Autocomplete
+                  label="Modelo"
+                  disabled={!formData.brand}
+                  value={formData.model}
+                  onChange={(_, value) => handleModelSelected(value!)}
+                  options={models}
+                  loading={lazyGetModelIsLoading}
+                />
+              </FormControl>
+              {formData.model && (
                 <FormControl fullWidth>
                   <Autocomplete
-                    label="Marca"
-                    value={formData.brand}
+                    label="Ano"
+                    disabled={!formData.model}
+                    value={formData.year}
+                    loading={lazyGetYearListByModelIsLoading}
                     onChange={(_, value) => {
-                      handleFormData("brand", value!);
-                      trigger({brandCode: value!.codigo})
+                      setFormData((prev) => ({ ...prev, year: value }));
                     }}
-                    options={brands ?? []}
+                    options={years ?? []}
                   />
                 </FormControl>
-                <FormControl fullWidth>
-                  <Autocomplete
-                    label="Modelo"
-                    disabled={!formData.brand}
-                    value={formData.model}
-                    onChange={(_, value) => {handleFormData("model", value!); getYearListByModel({
-                      brandCode: formData.brand!.codigo,
-                      modelCode: value!.codigo
-                    })}}
-                    options={models}
-                    loading={lazyGetModelIsLoading}
-                  />
-                </FormControl>
-                {formData.model && (
-                  <FormControl fullWidth>
-                    <Autocomplete
-                      label="Ano"
-                      disabled={!formData.model}
-                      value={formData.year}
-                      loading={lazyGetYearListByModelIsLoading}
-                      onChange={(_, value) => handleFormData("year", value!)}
-                      options={years ?? []}
-                    />
-                  </FormControl>
-                )}
-                <Button
-                  type="submit"
-                  variant="contained"
-                  disabled={
-                    !(formData.brand && formData.model && formData.year)
-                  }
-                >
-                  Consultar preço
-                </Button>
-              </form>
-            </CustomCard>
-          )}
+              )}
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={!(formData.brand && formData.model && formData.year)}
+              >
+                Consultar preço
+              </Button>
+            </form>
+          </CustomCard>
+        )}
       </main>
     </HomePageWrapper>
   );

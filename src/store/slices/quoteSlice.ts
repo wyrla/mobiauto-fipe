@@ -36,28 +36,43 @@ export const quoteSlice = createSlice({
   reducers: {
     setFormData: (
       state,
-      action: PayloadAction<{
-        field: FormKeys;
-        value: FipeItem;
-      }>
+      action: PayloadAction<QuoteState['form']>
     ) => {
       return {
         ...state,
         form: {
           ...state.form,
-          [action.payload.field]: { ...action.payload.value },
+         ...action.payload,
         },
       };
     },
     setBrandsList: (state, action: PayloadAction<FipeItem[]>) => {
-      state.lists.brands = action.payload;
+      return {
+        ...state,
+        lists: {
+          ...state.lists,
+          brands: action.payload,
+        },
+      };
     },
     setModelsList: (state, action) => {
-
-      state.lists.models = action.payload;
+      console.log(action);
+      return {
+        ...state,
+        lists: {
+          ...state.lists,
+          models: action.payload,
+        },
+      };
     },
     setYearsByModelList: (state, action: PayloadAction<FipeItem[]>) => {
-      state.lists.yearsByModel = action.payload;
+      return {
+        ...state,
+        lists: {
+          ...state.lists,
+          yearsByModel: action.payload,
+        },
+      };
     },
   },
 });
