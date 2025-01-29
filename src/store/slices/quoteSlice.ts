@@ -55,7 +55,7 @@ export const quoteSlice = createSlice({
         },
       };
     },
-    setModelsList: (state, action) => {
+    setModelsList: (state, action: PayloadAction<FipeItem[]>) => {
       return {
         ...state,
         lists: {

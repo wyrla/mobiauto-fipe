@@ -43,7 +43,7 @@ export const HomePage: React.FC = () => {
     setFormData((prev) => ({ ...prev, model: value }));
     const f = await getYearListByModel({
       brandCode: formData.brand!.codigo,
-      modelCode: value!.codigo,
+      modelCode: value.codigo,
     });
     dispatch(setYearsByModelList(f.data ?? []));
   };
@@ -74,7 +74,7 @@ export const HomePage: React.FC = () => {
                     label="Modelo"
                     disabled={!formData.brand}
                     value={formData.model}
-                    onChange={(_, value) => handleModelSelected(value!)}
+                    onChange={(_, value) => {handleModelSelected(value!)}}
                     options={models}
                     loading={lazyGetModelIsLoading}
                   />
