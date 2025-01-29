@@ -1,50 +1,66 @@
-# React + TypeScript + Vite
+# Fact sheet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projeto: mobiauto-fipe<br>
+Funcionalidade: Cotação de valor de carros
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Estrutura
 ```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+📁 src
+  ├─ 📁 api
+  |  └─ fipe
+  |     └─ Configuração da API de consumo e endpoints disponíveis
+  ├─ 📁 components
+  |     └─ Componentes do MUI _"wrapped"_
+  ├─ 📁 hooks
+  |     └─ Hooks para a manipulação da stores
+  ├─ 📁 lib
+  |     ├─ exercises
+  |     |  └─ Arquivos com as resoluções do exercícios propostos
+  |     └─ mui
+  |        └─ Configuração do tema com MUI 
+  ├─ 📁 pages
+  |     └─ Componentes de páginas
+  ├─ 📁 store
+  |     ├─ slices
+        |  └─ Definição das _slices_ (estados) a serem utilizados na store  
+        └─ store
+           └─ Definição da store global
 ```
+- Docs Relevantes
+
+  - <https://react.dev/reference/react>
+  - <https://redux-toolkit.js.org/introduction/getting-started>
+  - <https://redux-toolkit.js.org/rtk-query/overview>
+  - <https://reactrouter.com/home>
+  - <https://mui.com/material-ui/getting-started/>
+
+
+
+## Desenvolvimento
+
+- Requisitos:
+
+  - [npm](https://www.npmjs.com/)
+
+- Instalar dependências:
+
+  ```bash
+  npm i
+  ```
+- Executar runtime de desenvolvimento:
+
+  ```bash
+  npm run dev
+  ```
+
+- Build de produção:
+
+  ```bash
+  npm run build
+  ```
+    
+- Executar exercícios:
+
+  ```bash
+  npm run exercises
+  ```
