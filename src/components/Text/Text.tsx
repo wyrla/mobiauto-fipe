@@ -4,10 +4,11 @@ type CustomTypographyProps = TypographyProps & {
   $bold?: boolean;
 }
 
-const Typography = styled(MuiTypography)<CustomTypographyProps>`${({ $bold }) => `
-  font-weight: ${$bold ? 700 : 400};
-`}`
+const Typography = styled(MuiTypography)<CustomTypographyProps>`
+  font-weight: ${props => (props.$bold ? 700 : 400)};
+`
 
-export const Text = ({children, ...props}: CustomTypographyProps) => {
+export const Text = ({children,  ...props}: CustomTypographyProps) => {
+ 
   return <Typography {...props}>{children}</Typography>;
 }
