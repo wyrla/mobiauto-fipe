@@ -65,7 +65,7 @@ export const HomePage: React.FC = () => {
       justifyContent="center"
       alignItems="center"
       spacing={2}
-      sx={{ height: "100%" }}
+      sx={{ height: "100vh" }}
     >
       <Grid
         component="main"
