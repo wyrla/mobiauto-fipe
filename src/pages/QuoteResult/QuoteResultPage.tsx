@@ -30,7 +30,7 @@ export const QuoteResult: React.FC = () => {
   return (
     <QuoteResultPageWrapper>
       <Grid component="main" container direction="column" alignItems="center">
-        <Text variant="h1" $bold={true}>
+        <Text variant="h1" $bold={true}  align="center">
           Tabela Fipe: Preço {car?.Marca} {car?.Modelo} {car?.AnoModelo}
         </Text>
         <CustomChip label={car?.Valor} />

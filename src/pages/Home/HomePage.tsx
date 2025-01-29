@@ -77,7 +77,7 @@ export const HomePage: React.FC = () => {
         gap={2}
       >
         <Text variant="h1">Tabela Fipe</Text>
-        <Text variant="h2">
+        <Text variant="h2" align="center">
           Consulte o valor de um veículo de forma gratuita
         </Text>
         {brands?.length && (
