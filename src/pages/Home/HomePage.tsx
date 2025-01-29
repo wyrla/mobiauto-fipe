@@ -16,6 +16,7 @@ import {
   setModelsList,
   setYearsByModelList,
 } from "../../store/slices";
+import { Alert } from "../../components/Alert";
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export const HomePage: React.FC = () => {
     model: null,
     year: null,
   });
-  const { data: brands } = useGetBrandsQuery();
+  const { data: brands, isError: brandListSucceed } = useGetBrandsQuery();
   const [getModels, { isLoading: lazyGetModelIsLoading }] =
     api.endpoints.getModels.useLazyQuery();
   const [getYearListByModel, { isLoading: lazyGetYearListByModelIsLoading }] =
@@ -80,6 +81,7 @@ export const HomePage: React.FC = () => {
         <Text variant="h2" align="center">
           Consulte o valor de um veículo de forma gratuita
         </Text>
+        {brandListSucceed && (<Alert severity="error">Desculpe, mas não possível obter os dados para consulta. Entre</Alert>)}
         {brands?.length && (
           <CustomCard>
             <Suspense fallback={<Text>Carregando...</Text>}>
