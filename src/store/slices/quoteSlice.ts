@@ -56,7 +56,6 @@ export const quoteSlice = createSlice({
       };
     },
     setModelsList: (state, action) => {
-      console.log(action);
       return {
         ...state,
         lists: {

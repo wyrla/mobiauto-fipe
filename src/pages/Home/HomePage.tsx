@@ -20,7 +20,6 @@ export const HomePage: React.FC = () => {
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(formData);
     handleFormData(formData);
     navigate("/quote-result");
   };
@@ -36,11 +35,11 @@ export const HomePage: React.FC = () => {
     dispatch(setModelsList(list.data?.modelos ?? [] ));
   };
 
-  const handleModelSelected = async (v) => {
-    setFormData((prev) => ({ ...prev, model: v }));
+  const handleModelSelected = async (value: FipeItem) => {
+    setFormData((prev) => ({ ...prev, model: value }));
     const f = await getYearListByModel({
       brandCode: formData.brand!.codigo,
-      modelCode: formData.model!.codigo,
+      modelCode: value!.codigo,
     });
     dispatch(setYearsByModelList(f.data ?? []));
   };
