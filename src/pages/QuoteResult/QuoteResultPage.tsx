@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { CustomChip, QuoteResultPageWrapper } from "./QuoteResultPage.styles";
 import { useQuote } from "../../hooks";
 import { api } from "../../api/fipe";
-import { Text } from "../../components";
+import { Grid, Text } from "../../components";
 import { QuoteState } from "../../store/slices/quoteSlice";
 
 export const QuoteResult: React.FC = () => {
@@ -15,7 +15,7 @@ export const QuoteResult: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!Object.values(formData).every((item) => item?.codigo)) navigate("/");
+    if (!Object.values(formData).every((item) => item?.codigo)) navigate(-1);
     fecthQuote(formData);
   }, [formData]);
 
@@ -29,13 +29,13 @@ export const QuoteResult: React.FC = () => {
 
   return (
     <QuoteResultPageWrapper>
-      <main>
+      <Grid component="main" container direction="column" alignItems="center">
         <Text variant="h1" $bold={true}>
           Tabela Fipe: Preço {car?.Marca} {car?.Modelo} {car?.AnoModelo}
         </Text>
         <CustomChip label={car?.Valor} />
         <Text variant="caption">Este é o preço de compra do veículo</Text>
-      </main>
+      </Grid>
     </QuoteResultPageWrapper>
   );
 };

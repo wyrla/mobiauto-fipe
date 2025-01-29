@@ -1,5 +1,11 @@
-import { Autocomplete, Button, FormControl, Text } from "../../components";
-import { CustomCard, HomePageWrapper } from "./HomePage.styles";
+import {
+  Autocomplete,
+  Button,
+  FormControl,
+  Grid,
+  Text,
+} from "../../components";
+import { CustomCard } from "./HomePage.styles";
 import { useNavigate } from "react-router";
 import { useQuote } from "../../hooks";
 import { api, FipeItem, useGetBrandsQuery } from "../../api/fipe";
@@ -53,8 +59,23 @@ export const HomePage: React.FC = () => {
   };
 
   return (
-    <HomePageWrapper>
-      <main>
+    <Grid
+      container
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      spacing={2}
+      sx={{ height: "100%" }}
+    >
+      <Grid
+        component="main"
+        size={{ xs: 10, sm: 10, md: 6, xl: 4 }}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        flexDirection="column"
+        gap={2}
+      >
         <Text variant="h1">Tabela Fipe</Text>
         <Text variant="h2">
           Consulte o valor de um veículo de forma gratuita
@@ -112,7 +133,7 @@ export const HomePage: React.FC = () => {
             </Suspense>
           </CustomCard>
         )}
-      </main>
-    </HomePageWrapper>
+      </Grid>
+    </Grid>
   );
 };
