@@ -4,8 +4,12 @@ import { useNavigate } from "react-router";
 import { useQuote } from "../../hooks";
 import { api, FipeItem, useGetBrandsQuery } from "../../api/fipe";
 import { useAppDispatch } from "../../store";
-import { useState } from "react";
-import { QuoteState, setModelsList, setYearsByModelList } from "../../store/slices";
+import { Suspense, useState } from "react";
+import {
+  QuoteState,
+  setModelsList,
+  setYearsByModelList,
+} from "../../store/slices";
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -53,49 +57,53 @@ export const HomePage: React.FC = () => {
         </Text>
         {brands?.length && (
           <CustomCard>
-            <form onSubmit={handleFormSubmit}>
-              <FormControl fullWidth>
-                <Autocomplete
-                  label="Marca"
-                  value={formData.brand}
-                  onChange={(_, value) => {
-                    handleBrandSelected(value!);
-                  }}
-                  options={brands ?? []}
-                />
-              </FormControl>
-              <FormControl fullWidth>
-                <Autocomplete
-                  label="Modelo"
-                  disabled={!formData.brand}
-                  value={formData.model}
-                  onChange={(_, value) => handleModelSelected(value!)}
-                  options={models}
-                  loading={lazyGetModelIsLoading}
-                />
-              </FormControl>
-              {formData.model && (
+            <Suspense fallback={<Text>Carregando...</Text>}>
+              <form onSubmit={handleFormSubmit}>
                 <FormControl fullWidth>
                   <Autocomplete
-                    label="Ano"
-                    disabled={!formData.model}
-                    value={formData.year}
-                    loading={lazyGetYearListByModelIsLoading}
+                    label="Marca"
+                    value={formData.brand}
                     onChange={(_, value) => {
-                      setFormData((prev) => ({ ...prev, year: value }));
+                      handleBrandSelected(value!);
                     }}
-                    options={years ?? []}
+                    options={brands ?? []}
                   />
                 </FormControl>
-              )}
-              <Button
-                type="submit"
-                variant="contained"
-                disabled={!(formData.brand && formData.model && formData.year)}
-              >
-                Consultar preço
-              </Button>
-            </form>
+                <FormControl fullWidth>
+                  <Autocomplete
+                    label="Modelo"
+                    disabled={!formData.brand}
+                    value={formData.model}
+                    onChange={(_, value) => handleModelSelected(value!)}
+                    options={models}
+                    loading={lazyGetModelIsLoading}
+                  />
+                </FormControl>
+                {formData.model && (
+                  <FormControl fullWidth>
+                    <Autocomplete
+                      label="Ano"
+                      disabled={!formData.model}
+                      value={formData.year}
+                      loading={lazyGetYearListByModelIsLoading}
+                      onChange={(_, value) => {
+                        setFormData((prev) => ({ ...prev, year: value }));
+                      }}
+                      options={years ?? []}
+                    />
+                  </FormControl>
+                )}
+                <Button
+                  type="submit"
+                  variant="contained"
+                  disabled={
+                    !(formData.brand && formData.model && formData.year)
+                  }
+                >
+                  Consultar preço
+                </Button>
+              </form>
+            </Suspense>
           </CustomCard>
         )}
       </main>
