@@ -15,7 +15,7 @@ export const QuoteResult: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!Object.values(formData).every((item) => item?.codigo)) navigate(-1);
+    if (!Object.values(formData).every((item) => item?.codigo)) navigate("/");
     fecthQuote(formData);
   }, [formData]);
 
